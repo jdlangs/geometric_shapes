@@ -197,7 +197,7 @@ public:
       pose \e pose and has possibly different passing and scaling: \e
       padding and \e scaling. This function is useful to implement
       thread safety, when bodies need to be moved around. */
-  virtual BodyPtr cloneAt(const Eigen::Isometry3d& pose, double padding, double scaling);
+  virtual BodyPtr cloneAt(const Eigen::Isometry3d& pose, double padding, double scaling) const = 0;
 
 protected:
   /** \brief This function is called every time a change to the body

@@ -48,7 +48,7 @@ include_directories(${rclcpp_INCLUDE_DIRS}
                     ${rmw_implementation_INCLUDE_DIRS}
                     ${console_bridge_INCLUDE_DIRS})
 
-add_library(${PROJECT_NAME}
+add_library(${PROJECT_NAME} SHARED
   src/bodies.cpp
   src/body_operations.cpp
   src/mesh_operations.cpp
@@ -58,12 +58,22 @@ add_library(${PROJECT_NAME}
   src/shapes.cpp
 )
 ament_target_dependencies(${PROJECT_NAME}
-    rclcpp shape_msgs
+    rclcpp
+    shape_msgs
     visualization_msgs
     random_numbers
     eigen_stl_containers
     geometry_msgs
-    resource_retriever)
+)
+
+target_link_libraries(${PROJECT_NAME}
+  resource_retriever::resource_retriever
+  qhull
+)
+
+ament_export_include_directories(include)
+ament_export_dependencies(eigen_stl_containers)
+ament_export_libraries(${PROJECT_NAME} ${ASSIMP_LIBRARIES})
 
 # if(BUILD_TESTING)
 #   find_package(ament_cmake_gtest REQUIRED)
